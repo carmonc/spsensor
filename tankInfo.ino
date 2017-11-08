@@ -27,7 +27,7 @@ tank_t tankGeneric = {0};
  *        state will change to discharging, if appropriate, through normal
  *        application use.
  */
-void initializeTank()
+void initializeVessel()
 {
    // worst case is filling on init. 
       tank_t* subject = &tankGeneric;

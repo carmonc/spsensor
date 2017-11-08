@@ -45,7 +45,7 @@ extern tank_t tankGeneric;
 
 const char* TANK_GENERIC_NAME = "GEN";  
 
-void initializeTank();
+void initializeVessel();
 void computeLevel();
 
 #endif
