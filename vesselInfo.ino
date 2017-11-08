@@ -12,7 +12,7 @@
 Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
 #endif
 
-#include "tankInfo.h"
+#include "vesselInfo.h"
 
 //Yes, this is global
 tank_t tankGeneric = {0};
