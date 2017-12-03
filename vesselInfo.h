@@ -1,49 +1,49 @@
 /*! @file
  */
 
-#ifndef RVTANKINFO_H_INCLUDED
-#define RVTANKINFO_H_INCLUDED
+#ifndef VESSELINFO_H_INCLUDED
+#define VESSELINFO_H_INCLUDED
 
-#define MAX_TANK_NAME 30
+#define MAX_VESSEL_NAME 30
 
-/*! @brief This enum defines the availabled types of tanks to monitor.
+/*! @brief This enum defines the availabled types of vessels to monitor.
  *
  */
-typedef enum tank_type_e 
+typedef enum vessel_type_e 
 {
-   TANK_TYPE_GENERIC_E,       //< Generic Level Tank >
-   TANK_TYPE_END_E            //< The last item in the list >
-} tank_type_t;
+   VESSEL_TYPE_GENERIC_E,       //< Generic Level Tank >
+   VESSEL_TYPE_END_E            //< The last item in the list >
+} vessel_type_t;
 
 /*! \enum
- * \brief This enum defines the types of activities that a tank can perform.
+ * \brief This enum defines the types of activities that a vessel can perform.
  *    - Filling is the state in which it's content type amount is increasing.
  *    - Discharging is the state in which its content type amount is decreasing.
  *    - Offline is the state in which the device is not communicating.
  *    - Stable is the state in which no detectable increase or decrease in level is detectable. 
  */
-typedef enum tank_activity_e {
-   TANK_ACTIVITY_FILLING_E = 0,
-   TANK_ACTIVITY_DISCHARGING_E,
-   TANK_ACTIVITY_END_E
-} tank_activity_t;
+typedef enum vessel_activity_e {
+   VESSEL_ACTIVITY_FILLING_E = 0,
+   VESSEL_ACTIVITY_DISCHARGING_E,
+   VESSEL_ACTIVITY_END_E
+} vessel_activity_t;
 
 /*! \struct
  * \brief This struct defines the 
  *
  */
-typedef struct tank_s 
+typedef struct vessel_s 
 { 
-   char name[MAX_TANK_NAME];     //< The name of the tank >
-   int capacity;                 //< Capacitu of the tank in US gallons > 
-   int level;                    //< The current level of the tank >
-   tank_type_t tankType;      //< Enumeration of the tank type >
-   tank_activity_t activity;  //< Enumeration of the activity the tank is engaging in >
-} tank_t;
+   char name[MAX_VESSEL_NAME];     //< The name of the vessel >
+   int capacity;                 //< Capacitu of the vessel in US gallons > 
+   int level;                    //< The current level of the vessel >
+   vessel_type_t vesselType;      //< Enumeration of the vessel type >
+   vessel_activity_t activity;  //< Enumeration of the activity the vessel is engaging in >
+} vessel_t;
 
-extern tank_t tankGeneric;
+extern vessel_t vesselGeneric;
 
-const char* TANK_GENERIC_NAME = "GEN";  
+const char* VESSEL_GENERIC_NAME = "GEN";  
 
 void initializeVessel();
 void computeLevel();

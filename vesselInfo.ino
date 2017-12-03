@@ -15,14 +15,14 @@ Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_
 #include "vesselInfo.h"
 
 //Yes, this is global
-tank_t tankGeneric = {0};
+vessel_t vesselGeneric = {0};
 
 /*!
- * @brief This function initializes the various tanks with their capacities
+ * @brief This function initializes the various vessels with their capacities
  *        and current levels.
  *
- *        This function also sets the tank activity to filling as an
- *        overfull tank can be the most difficult problem to deal with. The
+ *        This function also sets the vessel activity to filling as an
+ *        overfull vessel can be the most difficult problem to deal with. The
  *        system will adjust itself accordingly through various means. The
  *        state will change to discharging, if appropriate, through normal
  *        application use.
@@ -30,14 +30,14 @@ tank_t tankGeneric = {0};
 void initializeVessel()
 {
    // worst case is filling on init. 
-      tank_t* subject = &tankGeneric;
+      vessel_t* subject = &vesselGeneric;
       // Set common values
-      subject->tankType = TANK_TYPE_GENERIC_E;
-      subject->activity = TANK_ACTIVITY_FILLING_E; 
+      subject->vesselType = VESSEL_TYPE_GENERIC_E;
+      subject->activity = VESSEL_ACTIVITY_FILLING_E; 
       subject->level = 0;//FIXME! Make a function that fetches current level
-      memset(subject->name, 0, MAX_TANK_NAME);
+      memset(subject->name, 0, MAX_VESSEL_NAME);
       subject->capacity = 80;
-      strncpy(subject->name, TANK_GENERIC_NAME, MAX_TANK_NAME);
+      strncpy(subject->name, VESSEL_GENERIC_NAME, MAX_VESSEL_NAME);
 }
 
 /**************************************************************************/
@@ -71,10 +71,10 @@ bool getUserInput(char buffer[], uint8_t maxSize)
 }
 
 /*!
- * @brief This method computes the tank levels and handles the level as
+ * @brief This method computes the vessel levels and handles the level as
  *        appropriate.
  *
- *        This method computes the tank levels and handles the level as
+ *        This method computes the vessel levels and handles the level as
  *        appropriate. If the level is too high it should alarm the user.
  *
  *        If the level reaches zero (0) then it should alarm the user by either
@@ -82,20 +82,20 @@ bool getUserInput(char buffer[], uint8_t maxSize)
  */
 void computeLevel()
 {
-   tank_t* subject = &tankGeneric;
+   vessel_t* subject = &vesselGeneric;
    char msg[BUFSIZE+1] = {0};
    char inputs[BUFSIZE+1]={0};
    int r = rand()%5+1;
 
-   if(subject->activity == TANK_ACTIVITY_FILLING_E)
+   if(subject->activity == VESSEL_ACTIVITY_FILLING_E)
       subject->level+=r;
    else
       subject->level-=r;
 
    if( subject->level >= 100 )
-      subject->activity = TANK_ACTIVITY_DISCHARGING_E;
+      subject->activity = VESSEL_ACTIVITY_DISCHARGING_E;
    else if( subject->level <= 0 )
-      subject->activity = TANK_ACTIVITY_FILLING_E;
+      subject->activity = VESSEL_ACTIVITY_FILLING_E;
    
    sprintf(msg, "-%s:%i-\n\n", subject->name, subject->level);
    Serial.println(msg);
@@ -109,7 +109,7 @@ void computeLevel()
       //Wait for a response
       if(!ble.waitForOK() )
       {
-         Serial.println(F("Failed to send tank data?"));
+         Serial.println(F("Failed to send vessel data?"));
       }
       
 //         ble.print("AT+BLUEARTTX=");
